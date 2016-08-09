@@ -1,5 +1,8 @@
-require "strapi/version"
-
 module Strapi
-  # Your code goes here...
+  extend ActiveSupport::Autoload
+  autoload :Version
+  autoload :ControllerMethods
+  autoload :SortingMethods
+  autoload :Sorting
+  autoload :Utils
 end
