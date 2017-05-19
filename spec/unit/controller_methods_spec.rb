@@ -18,7 +18,8 @@ describe Strapi::ControllerMethods do
   describe '#index' do
     let(:record_factory) { double('Widget', to_s: 'Widget', all: relation) }
     let(:relation) { instance_double('relation') }
-    let(:filter_params) { double('filter_params') }
+    let(:permitted_filter_params) { double('permitted_filter_params') }
+    let(:filter_params) { double('filter_params', permit!: permitted_filter_params) }
     let(:filter_instance) { double('filter_instance', scope: relation) }
 
     after do
@@ -59,7 +60,7 @@ describe Strapi::ControllerMethods do
 
     it "retrieves a query corresponding to the model" do
       # but doesn't use it--should it be responsible for passing it along to the filter?
-      expect(WidgetQuery).to receive(:new).with(filter_params)
+      expect(WidgetQuery).to receive(:new).with(permitted_filter_params)
     end
 
     it "retrieves a filter corresponding to the model" do
