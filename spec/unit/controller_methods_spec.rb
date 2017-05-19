@@ -22,7 +22,7 @@ describe Strapi::ControllerMethods do
     let(:filter_params) { double('filter_params', permit!: permitted_filter_params) }
     let(:filter_instance) { double('filter_instance', scope: relation) }
 
-    after do
+    before do
       # define methods required on controller instance
       allow(controller_instance).to receive(:params).and_return({
         filter: filter_params
@@ -47,6 +47,9 @@ describe Strapi::ControllerMethods do
       allow(WidgetFilter).to receive(:new).and_return(filter_instance)
 
       # actually call the index method
+    end
+
+    after do
       controller_instance.index
     end
 
@@ -99,6 +102,18 @@ describe Strapi::ControllerMethods do
           }
         }
       )
+    end
+
+    context "no filter is provided" do
+      before do
+        allow(controller_instance).to receive(:params).and_return({
+          filter: nil
+        })
+      end
+
+      it "filters with an empty query object" do
+        expect(WidgetQuery).to receive(:new).with({})
+      end
     end
   end
 end

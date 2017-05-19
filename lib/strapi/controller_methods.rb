@@ -172,7 +172,11 @@ module Strapi
     end
 
     def filter_params
-      params[:filter].permit! || {}
+      if filter = params[:filter]
+        filter.permit!
+      else
+        {}
+      end
     end
 
     def apply_paging(scope)
