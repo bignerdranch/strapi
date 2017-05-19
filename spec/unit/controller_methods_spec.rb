@@ -1,5 +1,3 @@
-require 'active_support/inflector'
-
 # define classes retrieved by constant name
 class WidgetQuery
   def initialize(*)
